@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Totalplay - Login</title>
+  <link rel="stylesheet" href="../../ACT3/css/login.css" />
+</head>
+<body>
+
+  <main class="login-wrap">
+    <section class="login-left">
+      <a href="../../index.html" class="close-login" aria-label="Volver a inicio">✕</a>
+
+      <div class="login-card">
+        <a class="brand" href="#">
+          <span class="brand-name"></span>
+        </a>
+
+        <h1 class="title">Iniciar sesión</h1>
+        <p class="subtitle">Accede para administrar tus tareas.</p>
+
+        <form id="loginForm" class="form" autocomplete="on">
+          <div class="field">
+            <label for="loginUser">Usuario</label>
+            <input
+              id="loginUser"
+              type="text"
+              placeholder="Ej: usuario"
+              autocomplete="username"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="loginPass">Contraseña</label>
+            <div class="pass-row">
+              <input
+                id="loginPass"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+              />
+              <button type="button" class="btn-ghost" id="togglePass">Ver</button>
+            </div>
+          </div>
+
+          <button class="btn-primary" type="submit">Entrar</button>
+
+          <div id="msg" class="message" role="status" aria-live="polite"></div>
+
+          <p class="small">
+            ¿No tienes usuario?
+            <a href="#" id="showRegister" class="link">Regístrate</a>
+          </p>
+        </form>
+
+        <form id="registerForm" class="form is-hidden" autocomplete="on">
+          <div class="field">
+            <label for="regUser">Usuario</label>
+            <input
+              id="regUser"
+              type="text"
+              placeholder="Crea un usuario"
+              autocomplete="username"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="regPass">Contraseña</label>
+            <input
+              id="regPass"
+              type="password"
+              placeholder="Crea una contraseña"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+
+          <button class="btn-primary" type="submit">Crear cuenta</button>
+
+          <div id="msg2" class="message" role="status" aria-live="polite"></div>
+
+          <p class="small">
+            ¿Ya tienes cuenta?
+            <a href="#" id="showLogin" class="link">Volver</a>
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <section class="login-right">
+      <div class="welcome">
+        <h2>Bienvenido</h2>
+        <p>Inicia sesión y administra tareas en Totalplay</p>
+        <div class="welcome-pills">
+          <span class="pill amarillo">Telefonía</span>
+          <span class="pill verde">Internet</span>
+          <span class="pill rojo">TV</span>
+        </div>
+      </div>
+      <div class="bg-lines" aria-hidden="true"></div>
+    </section>
+  </main>
+
+  <script src="../js/login.js"></script>
+</body>
+</html>
