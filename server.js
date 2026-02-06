@@ -56,7 +56,7 @@ function auth(req, res, next) {
 app.use(express.static(PUBLIC_DIR));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(PUBLIC_DIR, "../../index.html"));
+  res.sendFile(path.join(PUBLIC_DIR, "index.html"));
 });
 
 app.post(["/register", "/api/register"], async (req, res, next) => {
