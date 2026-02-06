@@ -9,131 +9,138 @@
 </head>
 <body>
 
-  <header class="page-header">
-    <div class="container">
-      <div class="topbar">
-        <a href="../../index.html" class="brand">
-          <img src="../../ACT1/img/logo.png" alt="Logo de Totalplay" class="logo">
-        </a>
+<header class="page-header">
+  <div class="container">
+    <div class="topbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../ACT1/img/logo.png" alt="Logo de Totalplay" class="logo">
+      </a>
 
-        <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
 
-        <label for="nav-toggle" class="hamburger" aria-label="Abrir menú" tabindex="0">
-          <span></span>
-          <span></span>
-          <span></span>
-        </label>
+      <label for="nav-toggle" class="hamburger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </label>
 
-        <nav class="nav" aria-label="Menú principal">
-          <ul class="nav-links">
-            <li><a href="../../index.html">Inicio</a></li>
-            <li><a href="#" id="logoutLink">Cerrar Sesión</a></li>
-          </ul>
-        </nav>
-      </div>
-
-      <div class="header-content">
-        <h1 class="page-title">Gestor de <span class="amarillo">Tareas</span></h1>
-        <p class="hero-text">Administración avanzada de flujos de trabajo.</p>
-      </div>
+      <nav class="nav" aria-label="Menú principal">
+        <ul class="nav-links">
+          <li><a href="../../index.html">Inicio</a></li>
+          <li><a href="#" id="logoutLink">Cerrar Sesión</a></li>
+        </ul>
+      </nav>
     </div>
-  </header>
 
-  <main class="page-main">
-    <div class="container">
+    <div class="header-content">
+      <h1 class="page-title">Gestor de <span class="amarillo">Tareas</span></h1>
+      <p class="hero-text">Administración avanzada de flujos de trabajo.</p>
+    </div>
+  </div>
+</header>
 
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Crear tarea</h2>
-          <div class="stats" aria-live="polite">
-            <span class="pill">Total: <strong id="stat-total">0</strong></span>
-            <span class="pill">Pendientes: <strong id="stat-pend">0</strong></span>
-            <span class="pill">Completadas: <strong id="stat-done">0</strong></span>
-          </div>
+<main class="page-main">
+  <div class="container">
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 id="form-title">Crear tarea</h2>
+
+        <div class="stats" aria-live="polite">
+          <span class="pill">Total: <strong id="stat-total">0</strong></span>
+          <span class="pill">Pendientes: <strong id="stat-pend">0</strong></span>
+          <span class="pill">Completadas: <strong id="stat-done">0</strong></span>
+        </div>
+      </div>
+
+      <form id="form-tarea" class="task-form" autocomplete="off">
+        <input type="hidden" id="edit-id">
+
+        <div class="field">
+          <label for="nombre-tarea">Nombre de la tarea</label>
+          <input type="text" id="nombre-tarea" required>
         </div>
 
-        <div id="mensaje" class="message" role="status" aria-live="polite"></div>
+        <div class="field">
+          <label for="desc-tarea">Descripción</label>
+          <textarea id="desc-tarea" rows="2"></textarea>
+        </div>
 
-        <form id="form-tarea" class="task-form" autocomplete="off">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:15px;">
           <div class="field">
-            <label for="nombre-tarea">Nombre de la tarea</label>
-            <input type="text" id="nombre-tarea" placeholder="Ej: Mantenimiento de nodo" required>
+            <label for="creado-por">Creado por</label>
+            <input type="text" id="creado-por">
           </div>
 
           <div class="field">
-            <label for="desc-tarea">Descripción de la tarea</label>
-            <textarea id="desc-tarea" placeholder="Detalles adicionales de la tarea..." rows="2" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit;"></textarea>
+            <label for="asignado-a">Asignado a</label>
+            <input type="text" id="asignado-a">
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
-            <div class="field">
-              <label for="creado-por">Creado por</label>
-              <input type="text" id="creado-por" placeholder="Usuario del autor">
-            </div>
-            <div class="field">
-              <label for="asignado-a">Asignado a</label>
-              <input type="text" id="asignado-a" placeholder="Usuario del responsable">
-            </div>
-            <div class="field">
-              <label for="fecha-limite">Fecha Límite</label>
-              <input type="date" id="fecha-limite">
-            </div>
-          </div>
-
-          <div class="field-inline">
-            <label class="check">
-              <input type="checkbox" id="tarea-completa">
-              <span>Marcar como completada de inicio</span>
-            </label>
-          </div>
-
-          <div class="actions">
-            <button type="submit" class="btn primary" id="btn-agregar">Agregar Tarea</button>
-            <button type="button" class="btn ghost" id="btn-limpiar">Limpiar campos</button>
-          </div>
-        </form>
-      </section>
-
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Lista de Tareas</h2>
-
-          <div style="display:flex; flex-direction:column; gap:10px; width:100%;">
-            <div class="filters">
-              <button type="button" class="chip is-active" data-scope="creadas">Creadas por mí</button>
-              <button type="button" class="chip" data-scope="asignadas">Asignadas a mí</button>
-            </div>
-
-            <div class="filters">
-              <button type="button" class="chip is-active" data-filter="todas">Todas</button>
-              <button type="button" class="chip" data-filter="pendientes">Pendientes</button>
-              <button type="button" class="chip" data-filter="completadas">Completadas</button>
-            </div>
+          <div class="field">
+            <label for="fecha-limite">Fecha límite</label>
+            <input type="date" id="fecha-limite">
           </div>
         </div>
 
-        <ul id="lista-tareas" class="task-list" aria-live="polite"></ul>
-
-        <div class="list-footer">
-          <button type="button" class="btn danger" id="btn-borrar-todo">Eliminar todas las tareas</button>
+        <div class="field-inline">
+          <label class="check">
+            <input type="checkbox" id="tarea-completa">
+            <span>Marcar como completada</span>
+          </label>
         </div>
-      </section>
 
-    </div>
-  </main>
+        <div class="actions">
+          <button type="submit" class="btn primary" id="btn-agregar">
+            Agregar Tarea
+          </button>
 
-  <footer>
-    <div class="container">
-      <p>Síguenos en redes sociales:</p>
-      <div class="social-links">
-        <a href="https://www.facebook.com/Totalplay/" target="_blank">Facebook</a> |
-        <a href="https://www.instagram.com/totalplaymx/" target="_blank">Instagram</a> |
-        <a href="https://x.com/totalplaymx" target="_blank">Twitter</a>
+          <button type="button" class="btn ghost" id="btn-limpiar">
+            Limpiar campos
+          </button>
+
+          <button type="button" class="btn danger" id="btn-cancelar-edicion" hidden>
+            Cancelar edición
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Lista de Tareas</h2>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="filters">
+            <button type="button" class="chip is-active" id="btn-ver-todas">Ver Todas</button>
+            <button type="button" class="chip" id="btn-creadas-mi">Creadas por mí</button>
+            <button type="button" class="chip" id="btn-asignadas-mi">Asignadas a mí</button>
+          </div>
+
+          <div class="filters">
+            <button type="button" class="chip is-active" id="btn-todas">Todas</button>
+            <button type="button" class="chip" id="btn-pendientes">Pendientes</button>
+            <button type="button" class="chip" id="btn-completadas">Completadas</button>
+          </div>
+        </div>
       </div>
-      <p>&copy; 2026 Totalplay. Todos los derechos reservados.</p>
-    </div>
-  </footer>
 
-  <script src="../../ACT2/js/tareas.js"></script>
+      <ul id="lista-tareas" class="task-list"></ul>
+
+      <div class="list-footer">
+        <button class="btn danger" id="btn-borrar-todo">
+          Eliminar todas las tareas
+        </button>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Totalplay. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<script src="../../ACT2/js/tareas.js"></script>
 </body>
 </html>
