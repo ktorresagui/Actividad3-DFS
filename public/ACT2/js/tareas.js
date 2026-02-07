@@ -62,11 +62,16 @@ if (inputCreado) {
 const formatDate = (dateStr) => {
   if (!dateStr) return "---";
   const d = new Date(dateStr);
-  const meses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
-  const day = String(d.getDate()).padStart(2, "0");
-  const month = meses[d.getMonth()];
-  const year = d.getFullYear();
-  return `${day}/${month}/${year}`;
+  if (isNaN(d.getTime())) return "---";
+
+  const options = {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'America/Mexico_City'
+  };
+ 
+  return new Intl.DateTimeFormat('es-MX', options).format(d).toUpperCase().replace(/\./g, "");
 };
 
 class Tarea {
@@ -77,7 +82,7 @@ class Tarea {
     asignadoA = "",
     estado = "pendiente",
     id = makeId(),
-    fechaCreacion = Date.now(),
+    fechaCreacion = new Date().toISOString(),
     fechaAsignacion = null,
     deadline = null
   ) {
@@ -108,6 +113,7 @@ class GestorDeTareas {
   }
 
   agregar(datos) {
+    const ahora = new Date().toISOString();
     this.tareas.unshift(
       new Tarea(
         datos.nombre,
@@ -116,9 +122,9 @@ class GestorDeTareas {
         datos.asignadoA,
         datos.estado,
         makeId(),
-        Date.now(),
-        datos.asignadoA ? Date.now() : null,
-        datos.deadline
+        ahora,
+        datos.asignadoA ? ahora : null,
+        datos.deadline ? new Date(datos.deadline + "T12:00:00").toISOString() : null
       )
     );
     this.guardar();
@@ -127,6 +133,9 @@ class GestorDeTareas {
   editar(id, datos) {
     const t = this.tareas.find((t) => t.id === id);
     if (!t) return;
+    if (datos.deadline) {
+        datos.deadline = new Date(datos.deadline + "T12:00:00").toISOString();
+    }
     Object.assign(t, datos);
     this.guardar();
   }
@@ -286,7 +295,11 @@ listaUI.addEventListener("click", (e) => {
     inputNombre.value = t.nombre;
     inputDesc.value = t.descripcion;
     inputAsignado.value = t.asignadoA;
-    inputDeadline.value = t.deadline;
+   
+    if (t.deadline) {
+        inputDeadline.value = new Date(t.deadline).toISOString().split('T')[0];
+    }
+   
     checkCompletada.checked = t.estado === "completada";
     tareaEditandoId = id;
     editId.value = id;
@@ -326,17 +339,6 @@ if ($("#btn-borrar-todo")) {
     };
 }
 
-if ($("#btn-borrar-todo")) {
-    $("#btn-borrar-todo").onclick = () => {
-        if(confirm("¿Eliminar todas las tareas?")) {
-            gestor.tareas = [];
-            gestor.guardar();
-            render();
-        }
-    };
-}
-
-
 if ($("#logoutLink")) {
   $("#logoutLink").onclick = (e) => {
     e.preventDefault();
@@ -344,6 +346,5 @@ if ($("#logoutLink")) {
     redirectToIndex();
   };
 }
-
 
 render();
